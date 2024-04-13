@@ -19,11 +19,6 @@ export const paymentVerification = async (req, res) => {
   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;
 
-  const url =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:5173"
-      : "https://www.nidirentals.com";
-
   const body = razorpay_order_id + "|" + razorpay_payment_id;
 
   const expectedSignature = crypto
@@ -34,7 +29,7 @@ export const paymentVerification = async (req, res) => {
   const isAuthentic = expectedSignature === razorpay_signature;
 
   if (isAuthentic) {
-    res.redirect(`https://www.nidirentals.com/paymentsuccess?reference=${razorpay_payment_id}`);
+    res.redirect("https://www.nidirentals.com");
   } else {
     res.status(400).json({
       success: false,
