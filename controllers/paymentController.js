@@ -29,7 +29,11 @@ export const paymentVerification = async (req, res) => {
   const isAuthentic = expectedSignature === razorpay_signature;
 
   if (isAuthentic) {
-    res.redirect(`https://www.nidirentals.com/paymentsuccess?reference=${razorpay_payment_id}`);
+   res.json({
+      msg: "success",
+      orderId: razorpay_order_id,
+      paymentId: razorpay_payment_id,
+    });
   } else {
     res.status(400).json({
       success: false,
